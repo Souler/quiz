@@ -1,2 +1,5 @@
+npm-debug.log
+.DS_store
 node_modules/
-
+.env
+*.sqlite
