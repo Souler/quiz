@@ -2,6 +2,7 @@ var fs = require('fs');
 var path = require('path');
 var express = require('express');
 var router = express.Router();
+var routerQuiz = require('./quizes');
 
 var auto = function(req, res, next) {
 	var app = req.app;
@@ -17,6 +18,7 @@ var auto = function(req, res, next) {
 		next();
 }
 
+router.use('/quizes', routerQuiz);
 router.get('*', auto);
 
 module.exports = router;
