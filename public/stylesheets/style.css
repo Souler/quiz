@@ -64,3 +64,13 @@ ul.side-nav.fixed li a {
 .orange.darken-2 {
 	color: white;
 }
+
+body {
+display: flex;
+min-height: 100vh;
+flex-direction: column;
+}
+
+main {
+flex: 1 0 auto;
+}
