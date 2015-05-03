@@ -1,6 +1,26 @@
-<form method="get" action="/quizes/answer">
-	Pregunta: <%= q.question %>
-	<input type="text" name="a" placeholder="Responda aqui" />
-	<input type="hidden" name="q" value="<%= q.id %>" />
-	<input type="submit" value="Enviar" />
-</form>
+<ul class="collapsible" data-collapsible="accordion">
+  <li>
+    <div class="collapsible-header active"><i class="fa fa-question"></i><%= q.question %></div>
+    <div class="collapsible-body">
+    	<div class="row">
+    		<div class="container">
+					<form method="get" action="/quizes/answer">
+						<input type="text" name="a" placeholder="Responda aqui" />
+						<input type="hidden" name="q" value="<%= q.id %>" />
+						<button class="btn waves-effect waves-light" type="submit" name="action">Enviar
+						  <i class="mdi-content-send right"></i>
+						</button>
+					</form>
+    		</div>
+    	</div>
+    </div>
+  </li>
+  <li>
+    <div class="collapsible-header"><i class="mdi-maps-place"></i>Second</div>
+    <div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
+  </li>
+  <li>
+    <div class="collapsible-header"><i class="mdi-social-whatshot"></i>Third</div>
+    <div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
+  </li>
+</ul>

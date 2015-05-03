@@ -1,8 +1,12 @@
-<h3>Pregunta: <%= q.question %></h3>
-<p>La respuesta correcta: <%= q.answer %></p>
-<p>Tu respuesta: <%= answer %></p>
+<h4 class="orange-text text-darken-1 center"><%= q.question %></h4>
 <% if (correct) { %>
-<p>Respuesta CORRECTA</p>
+<h5 class="center">
+	<i class="green-text fa fa-check"></i>
+	<%= q.answer %>
+</h5>
 <% } else { %>
-<p>Respuesta INCORRECTA</p>
+<h5 class="center">
+	<i class="red-text fa fa-times"></i>
+	<%= answer %>
+</h5>
 <% } %>

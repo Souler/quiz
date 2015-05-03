@@ -1,25 +1,65 @@
 <!DOCTYPE html>
 <html lang='es'>
   <head>
-  	<meta charset='utf8'>
+    <meta charset='utf8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+     <meta name="theme-color" content="#f57c00">
+
     <title>Quiz. El juego de preguntas</title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
     <link rel='shortcut icon' href='favicon.ico' type='image/x-icon' />
+
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link type="text/css" rel="stylesheet" href="/stylesheets/materialize.css"  media="screen,projection"/>
+    <link type="text/css" rel='stylesheet' href='/stylesheets/style.css' />
+    <link type="text/css" rel='stylesheet' href='/stylesheets/wide.css' media='only screen and (min-width: 530px) and (min-device-width: 481px)'/>
+    <link rel='stylesheet' href='/stylesheets/smartphone.css' media='only screen and (max-width: 480px)'/>
+
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+    <script type="text/javascript" src="/javascripts/materialize.js"></script>
+    <script type="text/javascript" src="/javascripts/scripts.js"></script>
   </head>
   <body>
-  	<header>
-  		<h2>Quiz. El juego de las preguntas</h2>
-  	</header>
-  	<nav>
-  		<ul>
-  			<li><a href='/'>Inicio</a></li>
-  			<li><a href='/quizes/question'>Preguntas</a></li>
-  			<li><a href='/author'>Autores	</a></li>
-  		</ul>
-  	</nav>
-  	<%- body %>
-    <footer>
-        <a href='https://github.com/Souler/quiz' target='_blank'>GitHub</a>
+    <ul id="slide-out" class="side-nav fixed">
+        <li class="logo">
+            <a id="logo" href="/"></a>
+        </li>
+        <li class="bold active">
+            <a class="waves-effect waves-orange" href='/'>Inicio</a>
+        </li>
+        <li class="bold">
+            <a class="waves-effect waves-orange" href='/quizes/question'>Preguntas</a>
+        </li>
+        <li class="bold">
+            <a class="waves-effect waves-orange" href='/author'>Autores</a>
+        </li>
+    </ul>
+    <header class="orange darken-2">
+        <a href="#" data-activates="slide-out" class="button-collapse hide-on-large-only">
+            <i class="mdi-navigation-menu small"></i>
+        </a>
+
+        <div class="container">
+          <div class="row">
+            <div class="col s12">
+              <h1 class="header center-on-small-only">Quiz</h1>
+              <h4 class="light center-on-small-only">El juego de las preguntas</h4>
+            </div>
+          </div>
+        </div>
+
+    </header>
+    <main>
+        <div class="container">
+            <%- body %>
+        </div>
+    </main>
+    <footer class="orange darken-4 white-text">
+        <div class="container">
+            &copy; 2015 Quiz-CORE
+            <a class="right orange-text" target="_blank" href="https://github.com/Souler/quiz">
+                <i class="fa fa-github fa-2x"></i>
+            </a>
+        </div>
     </footer>
   </body>
 </html>

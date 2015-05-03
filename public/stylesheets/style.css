@@ -1,8 +1,66 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+header, main, footer {
+	padding-left: 240px;
+	}
+
+@media only screen and (max-width : 992px) {
+	header, main, footer {
+		padding-left: 0;
+	}
 }
 
-a {
-  color: #00B7FF;
+.bold {
+	font-weight: bold;
+}
+
+
+header h1 .sub {
+	font-size: 50%;
+	line-height: 4.2rem;
+}
+
+.logo {
+	margin-top: 30px;
+	margin-bottom: 10px;
+	border-bottom: 1px solid #DDD;
+}
+
+.logo #logo {
+	background-image: url('/images/q.png');
+	background-size: contain;
+	background-position: center;
+	background-repeat: no-repeat;
+	display: block;
+	height: 80px;
+	width: 100%;
+	margin-bottom: 20px;
+}
+
+.side-nav li.logo:hover {
+	background-color: transparent !important;
+}
+
+footer {
+	line-height: 40px
+}
+
+footer i.fa-github {
+	position: relative;
+	top: 6px;
+}
+
+.button-collapse {
+	position: absolute;
+	top: 0;
+	left: 10px;
+	color: #fff;
+}
+
+ul.side-nav.fixed li a {
+	font-size: 13px;
+	line-height: 44px;
+	height: 44px;
+}
+
+.orange.darken-2 {
+	color: white;
 }
