@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# materialize
+## prepare structure
+mkdir -p public/font
+
+cp node_modules/materialize-css/bin/materialize.css public/stylesheets/materialize.css
+cp node_modules/materialize-css/bin/materialize.js public/javascripts/materialize.js
+
+cp -r node_modules/materialize-css/font/ public/

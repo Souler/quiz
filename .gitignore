@@ -3,3 +3,7 @@ npm-debug.log
 node_modules/
 .env
 *.sqlite
+public/javascripts/material*
+public/stylesheets/material*
+public/font/material*
+public/font/roboto
