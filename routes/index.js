@@ -7,12 +7,17 @@ var routerQuiz = require('./quizes');
 var auto = function(req, res, next) {
 	var app = req.app;
 	var p = req.path.substring(1);
-	if (p.length <= 0)
-		p = 'index';
 
-	var file = path.join(app.get('views'), p + '.' + app.get('view engine'));
+	// Remove las / if present for avoiding errors with paths
+	if (p.charAt(p.length - 1) == '/')
+		p = p.substring(0, p.length - 1);
 
-	if (fs.existsSync(file))
+	// Direct path to the file
+	var fileA = path.join(app.get('views'), p + '.' + app.get('view engine'));
+	// Path to a directory, refering its index
+	var fileB = path.join(app.get('views'), p, 'index.' + app.get('view engine'));
+
+	if (fs.existsSync(fileA) || fs.existsSync(fileB))
 		res.render(p);
 	else
 		next();
