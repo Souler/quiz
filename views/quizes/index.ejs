@@ -1,0 +1,12 @@
+<form class="row" method="get" action="/quizes">
+  <div class="input-field col s12">
+    <i class="mdi-action-search prefix"></i>
+    <input id="search" name="search" type="text" value="<%= query %>">
+    <label for="search">Buscar</label>
+  </div>
+</form>
+<div class="collection">
+	<% questions.forEach(function(q) { %>
+  <a href="/quizes/<%= q.id %>" class="collection-item"><%= q.question %></a>
+  <% }) %>
+</div>
