@@ -17,6 +17,15 @@
     <script type="text/javascript" src="//code.jquery.com/jquery-1.11.2.min.js"></script>
     <script type="text/javascript" src="/javascripts/materialize.js"></script>
     <script type="text/javascript" src="/javascripts/scripts.js"></script>
+    <% if (errors && errors.length) { %>
+    <script type="text/javascript">
+        $(function() {
+            <% errors.forEach(function(err) { %>
+            Materialize.toast("<%- err.message %>", 5000) 
+            <% }) %>
+        })
+    </script>
+    <% } %>
   </head>
   <body>
     <ul id="slide-out" class="side-nav fixed">
@@ -37,7 +46,6 @@
         <a href="#" data-activates="slide-out" class="button-collapse hide-on-large-only">
             <i class="mdi-navigation-menu small"></i>
         </a>
-
         <div class="container">
           <div class="row">
             <div class="col s12">

@@ -9,4 +9,8 @@
 	<% questions.forEach(function(q) { %>
   <a href="/quizes/<%= q.id %>" class="collection-item"><%= q.question %></a>
   <% }) %>
+  <a href="/quizes/new" class="collection-item center">
+  	<i class="mdi-content-add"></i>
+  	<span>Crear nueva pregunta</span>
+  </a>
 </div>

@@ -72,5 +72,9 @@ flex-direction: column;
 }
 
 main {
-flex: 1 0 auto;
+	flex: 1 0 auto;
+}
+
+header .container .row {
+	margin-bottom: 0;
 }

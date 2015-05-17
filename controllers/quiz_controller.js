@@ -30,7 +30,7 @@ exports.list = function(req, res, next) {
 
 exports.question = function(req, res, next) {
 	res.locals.q = req.q;
-	res.render('quizes/question');
+	next();
 };
 
 exports.answer = function(req, res, next) {
@@ -41,5 +41,35 @@ exports.answer = function(req, res, next) {
 	res.locals.q = q;
 	res.locals.answer = givenAnswer;
 	res.locals.correct = (givenAnswer.toLowerCase() == expectedAnswer.toLowerCase());
-	res.render('quizes/answer');
+	next();
 };
+
+exports.create = function(req, res, next) {
+	var fields = [ "question", "answer" ];
+	var quiz = Quiz.build(req.body.quiz);
+
+	// Remove multiple whitespaces and trailing and ending whitespaces
+	fields.forEach(function(field) {
+		var val = quiz[field];
+		val.replace(/\s+/, ' ')
+			.replace(/^\s/, '')
+			.replace(/\s$/, '');
+		quiz[field] = val;
+	});
+
+	quiz
+	.validate()
+	.then(function() {
+		return quiz.save({ fields: fields });
+	})
+	.then(function() {
+		res.redirect('/quizes');
+	})
+	.catch(function(err) {
+		console.error(err);
+		res.locals.errors = err.errors;
+		res.locals.quiz = quiz; 
+		res.render('quizes/new');
+	})
+
+}

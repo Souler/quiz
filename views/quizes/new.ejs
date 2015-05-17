@@ -1,0 +1,16 @@
+<h4>Crear una pregunta</h4>
+<form method="post" action="/quizes/create">
+  <div class="row">
+    <div class="input-field col s12">
+      <input name="quiz[question]" id="question" type="text">
+      <label for="question">Pregunta</label>
+    </div>
+    <div class="input-field col s12">
+      <input name="quiz[answer]" id="answer" type="text">
+      <label for="answer">Respuesta</label>
+    </div>
+  </div>
+  <button class="btn waves-effect waves-light" type="submit">Enviar
+    <i class="mdi-content-send right"></i>
+  </button>
+</form>

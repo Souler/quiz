@@ -2,6 +2,8 @@ var fs = require('fs');
 var path = require('path');
 var express = require('express');
 var router = express.Router();
+
+var site = require('../controllers/site_controller');
 var routerQuiz = require('./quizes');
 
 var auto = function(req, res, next) {
@@ -23,7 +25,12 @@ var auto = function(req, res, next) {
 		next();
 }
 
+router.all('*', function(req, res, next) {
+	res.locals.errors = [];
+	next();
+});
+router.get('/', site.render('index'));
 router.use('/quizes', routerQuiz);
-router.get('*', auto);
+router.get('/author', site.render('author'));
 
 module.exports = router;

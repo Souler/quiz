@@ -21,7 +21,6 @@ sequelize
 .then(function(count) {
 	if (count == 0) {
 		var defaultQuestion = 	{
-			id: 0, // For now, this should be equal to the index
 			question: 'Cual es la capital de Italia?',
 			answer: 'Roma'
 		};
