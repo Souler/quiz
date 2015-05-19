@@ -5,6 +5,7 @@ var router = express.Router();
 
 var site = require('../controllers/site_controller');
 var routerQuiz = require('./quizes');
+var sessionsQuiz = require('./sessions');
 
 var auto = function(req, res, next) {
 	var app = req.app;
@@ -25,11 +26,8 @@ var auto = function(req, res, next) {
 		next();
 }
 
-router.all('*', function(req, res, next) {
-	res.locals.errors = [];
-	next();
-});
 router.get('/', site.render('index'));
+router.use(sessionsQuiz);
 router.use('/quizes', routerQuiz);
 router.get('/author', site.render('author'));
 

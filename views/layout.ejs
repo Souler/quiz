@@ -6,7 +6,7 @@
      <meta name="theme-color" content="#f57c00">
 
     <title>Quiz. El juego de preguntas</title>
-    <link rel='shortcut icon' href='favicon.ico' type='image/x-icon' />
+    <link rel='shortcut icon' href='/favicon.ico' type='image/x-icon' />
 
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <link type="text/css" rel="stylesheet" href="/stylesheets/materialize.css"  media="screen,projection"/>
@@ -17,11 +17,16 @@
     <script type="text/javascript" src="//code.jquery.com/jquery-1.11.2.min.js"></script>
     <script type="text/javascript" src="/javascripts/materialize.js"></script>
     <script type="text/javascript" src="/javascripts/scripts.js"></script>
-    <% if (errors && errors.length) { %>
+    <%
+        var err = [];
+        if (errors && errors.length) err = err.concat(errors);
+        if (session && session.errors && session.errors.length) err = err.concat(session.errors);
+    %>
+    <% if (err.length) { %>
     <script type="text/javascript">
         $(function() {
-            <% errors.forEach(function(err) { %>
-            Materialize.toast("<%- err.message %>", 5000) 
+            <% err.forEach(function(e) { %>
+            Materialize.toast("<%- e.message %>", 5000) 
             <% }) %>
         })
     </script>
@@ -37,10 +42,21 @@
         </li>
         <li class="bold">
             <a class="waves-effect waves-orange" href='/quizes'>Preguntas</a>
-        </li>
         <li class="bold">
             <a class="waves-effect waves-orange" href='/author'>Autores</a>
         </li>
+        </li>
+        <% if (!session.user) { %>
+        <li class="bold">
+            <a class="waves-effect waves-orange" href='/login'>Iniciar sesion</a>
+        </li>
+        <% } %>
+        <% if (session.user) { %>
+        <li class="bold">
+            <p><%= session.user.username %><p>
+            <a class="waves-effect waves-orange" href='/logout'>Cerrar sesion</a>
+        </li>
+        <% } %>
     </ul>
     <header class="orange darken-2">
         <a href="#" data-activates="slide-out" class="button-collapse hide-on-large-only">

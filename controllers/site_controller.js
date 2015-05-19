@@ -6,6 +6,14 @@ exports.render = function(view) {
 	return middleware;
 }
 
+exports.redirect = function(path) {
+	var middleware = function(req, res) {
+		res.redirect(path);
+	}
+
+	return middleware;
+}
+
 exports.title = function(title, subtitle) {
 	var middleware = function(req, res, next) {
 		res.locals.title = title;
