@@ -26,6 +26,7 @@
     "pg": "~4.3.0",
     "pg-hstore": "~2.3.2",
     "materialize-css": "~0.96.1",
-    "method-override": "~2.3.3"
+    "method-override": "~2.3.3",
+    "express-session": "~1.11.2"
   }
 }

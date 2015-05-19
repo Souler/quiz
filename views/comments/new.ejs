@@ -1,0 +1,12 @@
+<h4>Publicar un comentario</h4>
+<form method="post" action="/quizes/<%= quiz.id %>/comments">
+  <div class="row">
+    <div class="input-field col s12">
+      <input name="comment[text]" id="question" type="text">
+      <label for="question">Comentario</label>
+    </div>
+  </div>
+  <button class="btn waves-effect waves-light" type="submit">Enviar
+    <i class="mdi-content-send right"></i>
+  </button>
+</form>

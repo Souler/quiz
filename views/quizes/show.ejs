@@ -10,3 +10,18 @@
 	  <i class="mdi-content-send right"></i>
 	</button>
 </form>
+<h5>Comentarios</h5>
+<ul class="collection">
+	<% q.Comments.forEach(function(comment) { %>
+  <li class="collection-item avatar">
+    <i class="mdi-communication-textsms circle"></i>
+    <span class="title">Anonimo dice:</span>
+    <p><%= comment.text %></p>
+    <a href="#!" class="secondary-content"><i class="mdi-action-grade"></i></a>
+  </li>
+  <% }) %>
+  <a href="/quizes/<%= q.id %>/comments/new" class="collection-item center">
+  	<i class="mdi-communication-textsms"></i>
+  	<span>Agregar un nuevo comentario</span>
+  </a>
+</ul>

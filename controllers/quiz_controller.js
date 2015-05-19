@@ -1,16 +1,23 @@
 var models = require('../models');
 var Quiz = models.Quiz;
+var Comment = models.Comment;
 
 var Strings = {
 	ERR_WRONG_QUESTION_ID : "WRONG QUESTION ID"
 };
 
 exports.load = function(req, res, next, quizId) {
-	Quiz.find(quizId)
+	Quiz.find({
+		where: { id: Number(quizId) },
+		include: [
+			{ model: Comment }
+		]
+	})
 	.then(function(q) {
 		if (!q)
 			throw new Error(Strings.ERR_WRONG_QUESTION_ID);
 		req.q = q;
+		res.locals.quiz = q;
 	})
 	.then(next)
 	.catch(next)
@@ -50,10 +57,10 @@ exports.create = function(req, res, next) {
 
 	// Remove multiple whitespaces and trailing and ending whitespaces
 	fields.forEach(function(field) {
-		var val = quiz[field];
-		val.replace(/\s+/, ' ')
-			.replace(/^\s/, '')
-			.replace(/\s$/, '');
+		var val = quiz[field]
+					.replace(/\s+/, ' ')
+					.replace(/^\s/, '')
+					.replace(/\s$/, '');
 		quiz[field] = val;
 	});
 
@@ -66,7 +73,6 @@ exports.create = function(req, res, next) {
 		res.redirect('/quizes');
 	})
 	.catch(function(err) {
-		console.error(err);
 		res.locals.errors = err.errors;
 		res.locals.q = quiz; 
 		res.render('quizes/new');
@@ -112,4 +118,4 @@ exports.delete = function(req, res, next) {
 		res.locals.errors = err.errors;
 		res.render('quizes');
 	})
-} 
+}
