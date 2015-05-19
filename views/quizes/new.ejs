@@ -2,11 +2,11 @@
 <form method="post" action="/quizes/create">
   <div class="row">
     <div class="input-field col s12">
-      <input name="quiz[question]" id="question" type="text">
+      <input name="quiz[question]" id="question" type="text" value="<% q.question %>">
       <label for="question">Pregunta</label>
     </div>
     <div class="input-field col s12">
-      <input name="quiz[answer]" id="answer" type="text">
+      <input name="quiz[answer]" id="answer" type="text" value="<% q.answer %>">
       <label for="answer">Respuesta</label>
     </div>
   </div>

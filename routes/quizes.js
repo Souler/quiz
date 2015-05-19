@@ -9,5 +9,8 @@ router.get('/:quizId(\\d+)', quizController.question, site.render('quizes/show')
 router.get('/:quizId(\\d+)/answer', quizController.answer, site.render('quizes/answer'));
 router.get('/new', site.render('quizes/new'));
 router.post('/create', quizController.create);
+router.get('/:quizId(\\d+)/edit', quizController.question, site.render('quizes/edit'));
+router.put('/:quizId(\\d+)', quizController.update);
+router.delete('/:quizId(\\d+)', quizController.delete);
 
 module.exports = router;

@@ -68,8 +68,48 @@ exports.create = function(req, res, next) {
 	.catch(function(err) {
 		console.error(err);
 		res.locals.errors = err.errors;
-		res.locals.quiz = quiz; 
+		res.locals.q = quiz; 
 		res.render('quizes/new');
 	})
-
 }
+
+exports.update = function(req, res, next) {
+	var fields = [ "question", "answer" ];
+	var updated = req.body.quiz;
+	var quiz = req.q;
+
+	// Remove multiple whitespaces and trailing and ending whitespaces
+	fields.forEach(function(field) {
+		var val = updated[field]
+					.replace(/\s+/, ' ')
+					.replace(/^\s/, '')
+					.replace(/\s$/, '');
+		quiz[field] = val;
+	});
+
+	quiz
+	.validate()
+	.then(function() {
+		return quiz.save({ fields: fields });
+	})
+	.then(function() {
+		res.redirect('/quizes');
+	})
+	.catch(function(err) {
+		res.locals.errors = err.errors;
+		res.locals.q = quiz; 
+		res.render('quizes/edit');
+	})
+}
+
+exports.delete = function(req, res, next) {
+	req.q
+	.destroy()
+	.then(function() {
+		res.redirect('/quizes');
+	})
+	.catch(function(err) {
+		res.locals.errors = err.errors;
+		res.render('quizes');
+	})
+} 
