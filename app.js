@@ -26,7 +26,10 @@ app.use(cookieParser('Quiz 2015'));
 app.use(session({
     resave: true,
     saveUninitialized: true,
-    secret: 'Quiz 2015'
+    secret: 'Quiz 2015',
+    cookie: {
+        maxAge: 2 * 60 * 1000
+    }
 }));
 app.use(methodOverride(function(req, res){
   if (req.body && typeof req.body === 'object' && '_method' in req.body) {
