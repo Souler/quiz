@@ -8,7 +8,7 @@ router.param('quizId', quizController.load);
 router.get('/', quizController.list, site.render('quizes'));
 router.get('/:quizId(\\d+)', quizController.question, site.render('quizes/show'));
 router.get('/:quizId(\\d+)/answer', quizController.answer, site.render('quizes/answer'));
-router.get('/new', site.render('quizes/new'));
+router.get('/new', quizController.new, site.render('quizes/new'));
 router.post('/create', quizController.create);
 router.get('/:quizId(\\d+)/edit', quizController.question, site.render('quizes/edit'));
 router.put('/:quizId(\\d+)', quizController.update);
@@ -16,5 +16,7 @@ router.delete('/:quizId(\\d+)', quizController.delete);
 
 router.get('/:quizId(\\d+)/comments/new', site.render('comments/new'));
 router.post('/:quizId(\\d+)/comments', commentController.create)
+
+router.get('/statistics', quizController.statistics);
 
 module.exports = router;

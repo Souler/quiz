@@ -1,13 +1,13 @@
 <h4>Editar una pregunta</h4>
-<form method="post" action="/quizes/<%= q.id %>">
+<form method="post" action="/quizes/<%= quiz.id %>">
   <div class="row">
   	<input name="_method" type="hidden" value="PUT">
     <div class="input-field col s12">
-      <input name="quiz[question]" id="question" type="text" value="<%- q.question %>">
+      <input name="quiz[question]" id="question" type="text" value="<%- quiz.question %>">
       <label for="question">Pregunta</label>
     </div>
     <div class="input-field col s12">
-      <input name="quiz[answer]" id="answer" type="text" value="<%- q.answer %>">
+      <input name="quiz[answer]" id="answer" type="text" value="<%- quiz.answer %>">
       <label for="answer">Respuesta</label>
     </div>
   </div>

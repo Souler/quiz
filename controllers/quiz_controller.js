@@ -1,3 +1,4 @@
+var Sequelize = require('sequelize');
 var models = require('../models');
 var Quiz = models.Quiz;
 var Comment = models.Comment;
@@ -51,6 +52,11 @@ exports.answer = function(req, res, next) {
 	next();
 };
 
+exports.new = function(req, res, next) {
+	// prepare just the q object on views
+	res.locals.q = {};
+	next();
+}
 exports.create = function(req, res, next) {
 	var fields = [ "question", "answer" ];
 	var quiz = Quiz.build(req.body.quiz);
@@ -117,5 +123,31 @@ exports.delete = function(req, res, next) {
 	.catch(function(err) {
 		res.locals.errors = err.errors;
 		res.render('quizes');
+	})
+}
+
+exports.statistics = function(req, res, next) {
+	var statistics = {};
+	Quiz.count()
+	.then(function(count) {
+		statistics.quiz_count = count;
+		return Comment.count();
+	})
+	.then(function(count) {
+		statistics.comment_count = count;
+		return Comment
+				.findAll({
+					attributes: [ [ Sequelize.fn('count', Sequelize.fn('DISTINCT', Sequelize.col('QuizId'))), 'count' ] ],
+					raw : true
+				});
+	})
+	.then(function(result) {
+		var count = result[0].count;
+		var avg = statistics.comment_count / statistics.quiz_count;
+		statistics.avg_comments_per_quiz = Math.round(avg * 100) / 100;
+		statistics.quiz_count_w_comments = count;
+		statistics.quiz_count_wo_comments = statistics.quiz_count - count;
+		res.locals.statistics = statistics;
+		res.render('quizes/statistics');
 	})
 }
