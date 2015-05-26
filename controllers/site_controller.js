@@ -1,3 +1,6 @@
+var path = require('path');
+var multer = require('multer');
+
 exports.render = function(view) {
 	var middleware = function(req, res) {
 		res.render(view);
@@ -23,3 +26,5 @@ exports.title = function(title, subtitle) {
 
 	return middleware;
 }
+
+exports.multer = multer({ dest: path.join(__dirname, '../public/media/') });

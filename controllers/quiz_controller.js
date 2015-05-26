@@ -3,6 +3,7 @@ var models = require('../models');
 var Quiz = models.Quiz;
 var Comment = models.Comment;
 var User = models.User;
+var Favourites = models.Favourites;
 
 var Strings = {
 	ERR_WRONG_QUESTION_ID : "WRONG QUESTION ID"
@@ -43,10 +44,27 @@ exports.list = function(req, res, next) {
 
 	res.locals.isUserView = !!req.user;
 
-	Quiz.findAll({ where: where })
+	Quiz
+	.findAll({ where: where })
 	.then(function(qs) {
 		res.locals.query = query;
 		res.locals.questions = qs;
+
+		if (!req.session.user)
+			return;
+
+		return Favourites
+		.findAll({ where : { UserId : req.session.user.id } })
+		.then(function(favs) {
+			var favsHash = {}; // Para busqueda rapida
+			favs.forEach(function(fav) {
+				favsHash[fav.QuizId] = true;
+			});
+
+			qs.forEach(function(q) {
+				q.isFav = !!(favsHash[q.id]);
+			})
+		})
 	})
 	.then(next)
 	.catch(next)

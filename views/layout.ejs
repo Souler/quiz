@@ -43,6 +43,11 @@
         <li class="bold">
             <a class="waves-effect waves-orange" href='/quizes'>Preguntas</a>
         </li>
+        <% if (session.user) { %>
+        <li class="bold">
+            <a class="waves-effect waves-orange" href='/user/<%= session.user.id %>/quizes'>Mis Preguntas</a>
+        </li>
+        <% } %>
         <li class="bold">
             <a class="waves-effect waves-orange" href='/quizes/statistics'>Estadisticas</a>
         </li>

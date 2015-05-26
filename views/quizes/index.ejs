@@ -9,7 +9,7 @@
 	<% questions.forEach(function(q) { %>
   <% var canEdit = session.user && (session.user.isAdmin || q.UserId == session.user.id) %>
   <li class="collection-item">
-  	<a href="/quizes/<%= q.id %>"><%= q.question %></a>
+  	<a href="/quizes/<%= q.id %>"><%= q.question %></a> 
     <% if (canEdit) { %>
     <form id="deleteform"class="secondary-content" method="post" action="/quizes/<%= q.id %>">
     	<input name="_method" type="hidden" value="DELETE">
@@ -19,6 +19,22 @@
     </form>  
     <a href="/quizes/<%= q.id %>/edit" class="secondary-content"><i class="small mdi-editor-mode-edit"></i></a>
     <% } %> 
+    <% if (session.user && !q.isFav) { %>
+    <form id="addfav" class="secondary-content" method="post" action="/user/<%= session.user.id %>/favourites/<%= q.id %>">
+      <input name="_method" type="hidden" value="PUT">
+      <a class="secondary-content" href="#" onclick="document.getElementById('addfav').submit()">
+        <i class="small mdi-action-favorite-outline"></i>
+      </a>
+    </form>
+    <% } %> 
+    <% if (session.user && q.isFav) { %>
+    <form id="delfav"class="secondary-content" method="post" action="/user/<%= session.user.id %>/favourites/<%= q.id %>">
+      <input name="_method" type="hidden" value="DELETE">
+      <a class="secondary-content" href="#" onclick="document.getElementById('delfav').submit()">
+        <i class="small mdi-action-favorite"></i>
+      </a>
+    </form>
+    <% } %>
   </li>
   <% }) %>
   <% if (!isUserView) { %>

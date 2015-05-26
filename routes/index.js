@@ -4,6 +4,7 @@ var express = require('express');
 var router = express.Router();
 
 var site = require('../controllers/site_controller');
+var userQuiz = require('./users');
 var routerQuiz = require('./quizes');
 var sessionsQuiz = require('./sessions');
 
@@ -29,6 +30,7 @@ var auto = function(req, res, next) {
 router.get('/', site.render('index'));
 router.use(sessionsQuiz);
 router.use('/quizes', routerQuiz);
+router.use('/user', userQuiz);
 router.get('/author', site.render('author'));
 
 module.exports = router;

@@ -57,5 +57,9 @@ module.exports = function(sequelize, DataTypes) {
 			}
 		}
 	});
+
+	var Favourites = sequelize.define('Favourites', {});
+	User.Favourites = Favourites;
+
 	return User;
 };

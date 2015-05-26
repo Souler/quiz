@@ -12,6 +12,7 @@ var sequelize = new Sequelize(process.env.DATABASE_URL, sequelizeOptions);
 var Quiz = sequelize.import(path.join(__dirname, './quiz'));
 var Comment = sequelize.import(path.join(__dirname, './comment'));
 var User = sequelize.import(path.join(__dirname, './user'));
+var Favourites = User.Favourites;
 
 Comment.belongsTo(Quiz);
 Quiz.hasMany(Comment, { onDelete: 'cascade' });
@@ -24,9 +25,14 @@ User.hasMany(Quiz);
 Comment.belongsTo(User)
 User.hasMany(Comment);
 	
+// Favoritos
+User.belongsToMany(Quiz, {through: Favourites});
+Quiz.belongsToMany(User, {through: Favourites});
+
 exports.Quiz = Quiz;
 exports.Comment = Comment;
 exports.User = User;
+exports.Favourites = Favourites;
 
 sequelize
 .sync()

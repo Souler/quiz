@@ -1,5 +1,5 @@
 <h4>Crear una pregunta</h4>
-<form method="post" action="/quizes/create">
+<form method="post" action="/quizes/create" enctype="multipart/form-data">
   <div class="row">
     <div class="input-field col s12">
       <input name="quiz[question]" id="question" type="text" value="<% q.question %>">
@@ -8,6 +8,10 @@
     <div class="input-field col s12">
       <input name="quiz[answer]" id="answer" type="text" value="<% q.answer %>">
       <label for="answer">Respuesta</label>
+    </div>
+    <div class="input-field col s12">
+      <input name="quiz[image]" id="image" type="file" accept="image/*" value="<%- quiz.answer %>">
+      <label for="image">Imagen <i>(opcional)</i></label>
     </div>
   </div>
   <button class="btn waves-effect waves-light" type="submit">Enviar
