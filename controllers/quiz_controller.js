@@ -2,6 +2,7 @@ var Sequelize = require('sequelize');
 var models = require('../models');
 var Quiz = models.Quiz;
 var Comment = models.Comment;
+var User = models.User;
 
 var Strings = {
 	ERR_WRONG_QUESTION_ID : "WRONG QUESTION ID"
@@ -11,7 +12,10 @@ exports.load = function(req, res, next, quizId) {
 	Quiz.find({
 		where: { id: Number(quizId) },
 		include: [
-			{ model: Comment }
+			{
+				model: Comment,
+				include: [ User ]
+			}
 		]
 	})
 	.then(function(q) {
@@ -59,7 +63,8 @@ exports.new = function(req, res, next) {
 }
 
 exports.create = function(req, res, next) {
-	var fields = [ "question", "answer" ];
+	req.bodu.quiz.UserId = req.session.user.id;
+	var fields = [ "question", "answer", "UserId" ];
 	var quiz = Quiz.build(req.body.quiz);
 
 	// Remove multiple whitespaces and trailing and ending whitespaces

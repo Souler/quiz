@@ -19,10 +19,10 @@ exports.create = function(req, res, next) {
 				.replace(/^\s/, '')
 				.replace(/\s$/, '');
 
-	var fields = [ "text" ];
 	var comment = Comment.build({
 					text: text,
-					QuizId: req.q.id
+					QuizId: req.q.id,
+					UserId: (req.session.user ? req.session.user.id : null)
 				});
 
 	comment

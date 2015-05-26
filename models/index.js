@@ -11,12 +11,23 @@ var sequelize = new Sequelize(process.env.DATABASE_URL, sequelizeOptions);
 
 var Quiz = sequelize.import(path.join(__dirname, './quiz'));
 var Comment = sequelize.import(path.join(__dirname, './comment'));
+var User = sequelize.import(path.join(__dirname, './user'));
 
 Comment.belongsTo(Quiz);
 Quiz.hasMany(Comment, { onDelete: 'cascade' });
 
+// Autor de los quizes
+Quiz.belongsTo(User);
+User.hasMany(Quiz);
+
+// Autor de los comentarios
+Comment.belongsTo(User)
+User.hasMany(Comment);
+
+
 exports.Quiz = Quiz;
 exports.Comment = Comment;
+exports.User = User;
 
 sequelize
 .sync()
@@ -25,14 +36,33 @@ sequelize
 })
 .then(function(count) {
 	if (count == 0) {
-		var defaultQuestion = 	{
-			question: 'Cual es la capital de Italia?',
-			answer: 'Roma'
-		};
-		return Quiz.create(defaultQuestion);
+		var questions = [
+			{ question: 'Capital de Italia', answer: 'Roma' },
+			{ question: 'Capital de Portugal', answer: 'Lisboa' },
+		];
+
+		return Quiz.bulkCreate(questions);
 	}
 })
 .then(function(def) {
 	if (def)
-		console.log("Base de datos inicializada");
+		console.log("Base de datos inicializada: Preguntas");
+})
+.then(function() {
+	return User.count();
+})
+.then(function(count) {
+	if (count > 0)
+		return;
+
+	var users = [
+		{ username: 'admin', password: '1234', role: 'admin' },
+		{ username: 'pepe', password: '5678' }
+	];
+
+	return User.bulkCreate(users);
+})
+.then(function(def) {
+	if (def)
+		console.log("Base de datos inicializada: Usuarios");
 })

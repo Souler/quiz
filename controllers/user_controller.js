@@ -1,20 +1,17 @@
-var users = {
-	admin: {
-		id: 1,
-		username: 'admin',
-		password: '12345'
-	}
-};
+var models = require('../models');
+var User = models.User;
 
 exports.authenticate = function(login, password, cb) {
+	User
+	.find({ where: { username: login } })
+	.then(function(user) {
+		if (!user)
+			throw new Error('No existe el usuario');
 
-	if (users[login]) {
-		if (password == users[login].password) {
-			cb(null, users[login]);
-		}
-		else
-			cb(new Error('Contrasena incorrecta'));
-	}		
-	else
-		cb(new Error('No existe el usuario'));
+		if (!user.verifyPassword(password))
+			throw new Error('Contrasena incorrecta');
+
+		cb(null, user)
+	})
+	.catch(cb)
 }

@@ -9,7 +9,7 @@
 	<% questions.forEach(function(q) { %>
   <li class="collection-item">
   	<a href="/quizes/<%= q.id %>"><%= q.question %></a>
-    <% if (session.isLoggedIn()) { %>
+    <% if (session.user) { %>
     <form id="deleteform"class="secondary-content" method="post" action="/quizes/<%= q.id %>">
     	<input name="_method" type="hidden" value="DELETE">
     	<a class="secondary-content" href="#" onclick="return confirm('Borrar: <%= q.question %>') && document.getElementById('deleteform').submit();">
