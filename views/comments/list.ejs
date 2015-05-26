@@ -1,6 +1,7 @@
 <ul class="collection">
 	<% q.Comments.forEach(function(comment) { %>
-  <% if (comment.published || session.user) { %>
+  <% var canPublish = session.user && (session.user.isAdmin || comment.Quiz.UserId == session.user.id) %>
+  <% if (comment.published || canPublish) { %>
   <li class="collection-item avatar">
     <i class="mdi-communication-textsms circle"></i>
     <span class="title">
@@ -12,7 +13,7 @@
     	<span> dice:</span>
     </span>
     <p><%= comment.text %></p>
-    <% if (!comment.published && session.user) { %>
+    <% if (!comment.published && canPublish) { %>
     <a href="/quizes/<%= q.id %>/comments/<%= comment.id %>/publish" class="secondary-content" title="Marcar como publicado"><i class="small mdi-action-spellcheck"></i></a>
     <% } %>
   </li>

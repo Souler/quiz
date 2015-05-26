@@ -20,11 +20,11 @@ router.get('/:quizId(\\d+)/answer',	quiz.answer, 	site.render('quizes/answer'));
 router.get('/statistics', 			quiz.stats, 	site.render('quizes/statistics'));
 
 // Edition views
-router.get('/new', 					session.require.login, quiz.new, 		site.render('quizes/new'));
-router.post('/create', 				session.require.login, quiz.create, 	site.redirect('/quizes'));
-router.get('/:quizId(\\d+)/edit', 	session.require.login, quiz.question, 	site.render('quizes/edit'));
-router.put('/:quizId(\\d+)', 		session.require.login, quiz.update, 	site.redirect('/quizes'));
-router.delete('/:quizId(\\d+)', 	session.require.login, quiz.delete, 	site.redirect('/quizes'));
+router.get('/new', 					session.require.login, quiz.new, 				site.render('quizes/new'));
+router.post('/create', 				session.require.login, site.multer,				quiz.create, 	site.redirect('/quizes'));
+router.get('/:quizId(\\d+)/edit', 	session.require.login, quiz.require.ownership, 	quiz.question, 	site.render('quizes/edit'));
+router.put('/:quizId(\\d+)', 		session.require.login, quiz.require.ownership, 	site.multer,	quiz.update, 	site.redirect('/quizes'));
+router.delete('/:quizId(\\d+)', 	session.require.login, quiz.require.ownership, 	quiz.delete, 	site.redirect('/quizes'));
 
 // Coment views
 router.use('/:quizId(\\d+)/comments', commentsRouter);

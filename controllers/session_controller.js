@@ -12,7 +12,8 @@ exports.create = function(req, res, next) {
 		}
 
 		req.session.errors = [];
-		req.session.user = { id: user.id, username: user.username };
+		req.session.user = user.toJSON();
+		req.session.user.isAdmin = user.isAdmin();
 		var redir = req.session.redir || '/';
 		res.redirect(redir.toString());
 	})

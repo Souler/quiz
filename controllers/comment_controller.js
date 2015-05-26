@@ -1,9 +1,13 @@
 var models = require('../models');
+var Quiz = models.Quiz;
 var Comment = models.Comment;
 
 exports.load = function(req, res, next, commentId) {
 	Comment
-	.find({ where: { id: commentId } })
+	.find({
+		where: { id: commentId },
+		include: [ { model: Quiz } ]
+	})
 	.then(function(comment) {
 		if (!comment)
 			throw new Error("No existe el comentario " + commentId);
@@ -51,4 +55,16 @@ exports.publish = function(req, res, next) {
 		res.redirect('/quizes/' + req.q.id);
 	})
 	.catch(next)
+}
+
+exports.require = {};
+exports.require.ownership = function(req, res, next) {
+	var user = req.session.user;
+	var quiz = req.comment.Quiz;
+	var comment = req.comment;
+
+	if (user.isAdmin || user.id == quiz.UserId)
+		next();
+	else
+		res.redirect('/');
 }

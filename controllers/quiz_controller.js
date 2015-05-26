@@ -14,7 +14,10 @@ exports.load = function(req, res, next, quizId) {
 		include: [
 			{
 				model: Comment,
-				include: [ User ]
+				include: [
+					{ model: User },
+					{ model: Quiz },
+				]
 			}
 		]
 	})
@@ -29,9 +32,18 @@ exports.load = function(req, res, next, quizId) {
 }
 
 exports.list = function(req, res, next) {
+	var where = {};
+
 	var query = req.query.search || '';
 	var like = '%' + query.replace(/\s+/, '%') + '%';
-	Quiz.findAll({ where: { question : { like : like } } })
+	where.question = { like: like };
+
+	if (req.user)
+		where.UserId = req.user.id;
+
+	res.locals.isUserView = !!req.user;
+
+	Quiz.findAll({ where: where })
 	.then(function(qs) {
 		res.locals.query = query;
 		res.locals.questions = qs;
@@ -63,8 +75,12 @@ exports.new = function(req, res, next) {
 }
 
 exports.create = function(req, res, next) {
-	req.bodu.quiz.UserId = req.session.user.id;
-	var fields = [ "question", "answer", "UserId" ];
+	if (req.body.quiz.image)
+		req.body.quiz.image = req.files.image.name;
+
+	var fields = [ "question", "answer", "image", "UserId" ];
+	// Add userid to the object to be saved
+	req.body.quiz.UserId = req.session.user.id;
 	var quiz = Quiz.build(req.body.quiz);
 
 	// Remove multiple whitespaces and trailing and ending whitespaces
@@ -92,7 +108,10 @@ exports.create = function(req, res, next) {
 }
 
 exports.update = function(req, res, next) {
-	var fields = [ "question", "answer" ];
+	if (req.body.quiz.image)
+		req.body.quiz.image = req.files.image.name;
+
+	var fields = [ "question", "answer", "image" ];
 	var updated = req.body.quiz;
 	var quiz = req.q;
 
@@ -161,4 +180,15 @@ exports.stats = function(req, res, next) {
 		next();
 	})
 	.catch(next);
+}
+
+exports.require = {};
+exports.require.ownership = function(req, res, next) {
+	var quiz = req.quiz;
+	var user = req.session.user;
+
+	if (user.isAdmin || user.id == quiz.UserId)
+		next();
+	else
+		res.redirect('/');
 }

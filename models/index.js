@@ -23,31 +23,13 @@ User.hasMany(Quiz);
 // Autor de los comentarios
 Comment.belongsTo(User)
 User.hasMany(Comment);
-
-
+	
 exports.Quiz = Quiz;
 exports.Comment = Comment;
 exports.User = User;
 
 sequelize
 .sync()
-.then(function() {
-	return Quiz.count();
-})
-.then(function(count) {
-	if (count == 0) {
-		var questions = [
-			{ question: 'Capital de Italia', answer: 'Roma' },
-			{ question: 'Capital de Portugal', answer: 'Lisboa' },
-		];
-
-		return Quiz.bulkCreate(questions);
-	}
-})
-.then(function(def) {
-	if (def)
-		console.log("Base de datos inicializada: Preguntas");
-})
 .then(function() {
 	return User.count();
 })
@@ -66,3 +48,38 @@ sequelize
 	if (def)
 		console.log("Base de datos inicializada: Usuarios");
 })
+.then(function() {
+	return Quiz.count();
+})
+.then(function(count) {
+	if (count == 0) {
+		var questions = [
+			{ question: 'Capital de Italia', answer: 'Roma', UserId: 1 },
+			{ question: 'Capital de Portugal', answer: 'Lisboa', UserId: 2 },
+		];
+
+		return Quiz.bulkCreate(questions);
+	}
+})
+.then(function(def) {
+	if (def)
+		console.log("Base de datos inicializada: Preguntas");
+})
+.then(function() {
+	return Comment.count();
+})
+.then(function(count) {
+	if (count == 0) {
+		var comments = [
+			{ text: 'Comentario de prueba 1', published: 0, QuizId: 1, UserId: 1 },
+			{ text: 'Comentario de prueba 2', publised: 0, QuizId: 1, UserId: 2 },
+		];
+
+		return Comment.bulkCreate(comments);
+	}
+})
+.then(function(def) {
+	if (def)
+		console.log("Base de datos inicializada: Comentarios");
+})
+.catch(console.error)
