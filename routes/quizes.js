@@ -1,22 +1,32 @@
 var express = require('express');
 var router = express.Router();
+
+// routers
+var commentsRouter = require('./comments');
+
+// controllers
 var site = require('../controllers/site_controller');
-var quizController = require('../controllers/quiz_controller');
-var commentController = require('../controllers/comment_controller');
+var session = require('../controllers/session_controller');
+var quiz = require('../controllers/quiz_controller');
+var comment = require('../controllers/comment_controller');
 
-router.param('quizId', quizController.load);
-router.get('/', quizController.list, site.render('quizes'));
-router.get('/:quizId(\\d+)', quizController.question, site.render('quizes/show'));
-router.get('/:quizId(\\d+)/answer', quizController.answer, site.render('quizes/answer'));
-router.get('/new', quizController.new, site.render('quizes/new'));
-router.post('/create', quizController.create);
-router.get('/:quizId(\\d+)/edit', quizController.question, site.render('quizes/edit'));
-router.put('/:quizId(\\d+)', quizController.update);
-router.delete('/:quizId(\\d+)', quizController.delete);
+// Autoload
+router.param('quizId', 				quiz.load);
 
-router.get('/:quizId(\\d+)/comments/new', site.render('comments/new'));
-router.post('/:quizId(\\d+)/comments', commentController.create)
+// Show views
+router.get('/', 					quiz.list, 		site.render('quizes'));
+router.get('/:quizId(\\d+)', 		quiz.question, 	site.render('quizes/show'));
+router.get('/:quizId(\\d+)/answer',	quiz.answer, 	site.render('quizes/answer'));
+router.get('/statistics', 			quiz.stats, 	site.render('quizes/statistics'));
 
-router.get('/statistics', quizController.statistics);
+// Edition views
+router.get('/new', 					session.require.login, quiz.new, 		site.render('quizes/new'));
+router.post('/create', 				session.require.login, quiz.create, 	site.redirect('/quizes'));
+router.get('/:quizId(\\d+)/edit', 	session.require.login, quiz.question, 	site.render('quizes/edit'));
+router.put('/:quizId(\\d+)', 		session.require.login, quiz.update, 	site.redirect('/quizes'));
+router.delete('/:quizId(\\d+)', 	session.require.login, quiz.delete, 	site.redirect('/quizes'));
+
+// Coment views
+router.use('/:quizId(\\d+)/comments', commentsRouter);
 
 module.exports = router;

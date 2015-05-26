@@ -57,6 +57,7 @@ exports.new = function(req, res, next) {
 	res.locals.q = {};
 	next();
 }
+
 exports.create = function(req, res, next) {
 	var fields = [ "question", "answer" ];
 	var quiz = Quiz.build(req.body.quiz);
@@ -76,7 +77,7 @@ exports.create = function(req, res, next) {
 		return quiz.save({ fields: fields });
 	})
 	.then(function() {
-		res.redirect('/quizes');
+		next();
 	})
 	.catch(function(err) {
 		res.locals.errors = err.errors;
@@ -105,7 +106,7 @@ exports.update = function(req, res, next) {
 		return quiz.save({ fields: fields });
 	})
 	.then(function() {
-		res.redirect('/quizes');
+		next();
 	})
 	.catch(function(err) {
 		res.locals.errors = err.errors;
@@ -118,7 +119,7 @@ exports.delete = function(req, res, next) {
 	req.q
 	.destroy()
 	.then(function() {
-		res.redirect('/quizes');
+		next();
 	})
 	.catch(function(err) {
 		res.locals.errors = err.errors;
@@ -126,7 +127,7 @@ exports.delete = function(req, res, next) {
 	})
 }
 
-exports.statistics = function(req, res, next) {
+exports.stats = function(req, res, next) {
 	var statistics = {};
 	Quiz.count()
 	.then(function(count) {
@@ -148,6 +149,11 @@ exports.statistics = function(req, res, next) {
 		statistics.quiz_count_w_comments = count;
 		statistics.quiz_count_wo_comments = statistics.quiz_count - count;
 		res.locals.statistics = statistics;
-		res.render('quizes/statistics');
+
+		if (isNaN(statistics.avg_comments_per_quiz))
+			statistics.avg_comments_per_quiz = 0;
+
+		next();
 	})
+	.catch(next);
 }
