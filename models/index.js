@@ -35,7 +35,7 @@ exports.User = User;
 exports.Favourites = Favourites;
 
 sequelize
-.sync()
+.sync({ force: true })
 .then(function() {
 	return User.count();
 })
@@ -88,4 +88,7 @@ sequelize
 	if (def)
 		console.log("Base de datos inicializada: Comentarios");
 })
-.catch(console.error)
+.catch(function(err) { 
+	console.error("ERROR DURANTE LA INICIALIZACION DE DB");
+	console.error(err);
+})
