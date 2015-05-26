@@ -11,7 +11,7 @@ exports.create = function(req, res, next) {
 			return;
 		}
 
-		delete req.session.error;
+		req.session.errors = [];
 		req.session.user = { id: user.id, username: user.username };
 		var redir = req.session.redir || '/';
 		res.redirect(redir.toString());
@@ -22,4 +22,12 @@ exports.destroy = function(req, res, next) {
 	delete req.session.user;
 	var redir = req.session.redir || '/';
 	res.redirect(redir.toString());
+}
+
+exports.require = {};
+exports.require.login = function(req, res, next) {
+	if (req.session.user)
+		next();
+	else
+		res.redirect('/login');
 }

@@ -7,6 +7,10 @@ module.exports = function(sequelize, DataTypes) {
 					msg: "No se ha introducido comentario"
 				}
 			}
+		},
+		published: {
+			type: DataTypes.BOOLEAN,
+			defaultValue: false
 		}
 	});
 	return Comment;

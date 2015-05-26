@@ -13,12 +13,16 @@
 <h5>Comentarios</h5>
 <ul class="collection">
 	<% q.Comments.forEach(function(comment) { %>
+  <% if (comment.published || session.user) { %>
   <li class="collection-item avatar">
     <i class="mdi-communication-textsms circle"></i>
     <span class="title">Anonimo dice:</span>
     <p><%= comment.text %></p>
-    <a href="#!" class="secondary-content"><i class="mdi-action-grade"></i></a>
+    <% if (!comment.published && session.user) { %>
+    <a href="/quizes/<%= q.id %>/comments/<%= comment.id %>/publish" class="secondary-content" title="Marcar como publicado"><i class="small mdi-action-spellcheck"></i></a>
+    <% } %>
   </li>
+  <% } %>
   <% }) %>
   <a href="/quizes/<%= q.id %>/comments/new" class="collection-item center">
   	<i class="mdi-communication-textsms"></i>
