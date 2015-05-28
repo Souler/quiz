@@ -58,7 +58,7 @@ module.exports = function(sequelize, DataTypes) {
 		}
 	});
 
-	var Favourites = sequelize.define('Favourites', {});
+	var Favourites = sequelize.define('Favourites', { freezeTableName : true, tableName: 'favourites'});
 	User.Favourites = Favourites;
 
 	return User;

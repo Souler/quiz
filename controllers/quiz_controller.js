@@ -44,8 +44,12 @@ exports.list = function(req, res, next) {
 
 	res.locals.isUserView = !!req.user;
 
-	Quiz
-	.findAll({ where: where })
+	var searchPromise = Quiz.findAll({ where: where })
+
+	if (req.listFavs)
+		searchPromise = req.user.getFavourites({ where: where });
+
+	searchPromise
 	.then(function(qs) {
 		res.locals.query = query;
 		res.locals.questions = qs;
@@ -97,18 +101,23 @@ exports.create = function(req, res, next) {
 		req.body.quiz.image = req.files.image.name;
 
 	var fields = [ "question", "answer", "image", "UserId" ];
-	// Add userid to the object to be saved
-	req.body.quiz.UserId = req.session.user.id;
-	var quiz = Quiz.build(req.body.quiz);
 
 	// Remove multiple whitespaces and trailing and ending whitespaces
 	fields.forEach(function(field) {
-		var val = quiz[field]
+		var q = req.body.quiz;
+		if (q[field] == undefined)
+			return;
+
+		var val = q[field]
 					.replace(/\s+/, ' ')
 					.replace(/^\s/, '')
 					.replace(/\s$/, '');
-		quiz[field] = val;
+		q[field] = val;
 	});
+
+	// Add userid to the object to be saved
+	req.body.quiz.UserId = req.session.user.id;
+	var quiz = Quiz.build(req.body.quiz);
 
 	quiz
 	.validate()
