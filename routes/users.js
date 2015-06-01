@@ -14,7 +14,7 @@ router.param('userId', user.load);
 
 router.get('/:userId/quizes', quiz.list, site.render('quizes'));
 
-router.get('/:userId/favourites', 					session.require.login, user.require.ownership, favs.list, quiz.list, site.render('quizes'));
+router.get('/:userId/favourites', 					session.require.login, user.require.ownership, favs.list, quiz.list, site.title('Favoritas'), site.render('quizes'));
 router.put('/:userId/favourites/:quizId(\\d+)', 	session.require.login, user.require.ownership, favs.add);
 router.delete('/:userId/favourites/:quizId(\\d+)', 	session.require.login, user.require.ownership, favs.remove);
 

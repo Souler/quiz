@@ -31,6 +31,6 @@ router.get('/', site.render('index'));
 router.use(sessionsQuiz);
 router.use('/quizes', routerQuiz);
 router.use('/user', userQuiz);
-router.get('/author', site.render('author'));
+router.get('/author', site.title('Autores'), site.render('author'));
 
 module.exports = router;

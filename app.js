@@ -45,6 +45,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(function(req, res, next) {
     res.locals.md5 = md5;
+    res.locals.title = 'Quiz';
     res.locals.errors = [];
     res.locals.session = req.session || {};
 

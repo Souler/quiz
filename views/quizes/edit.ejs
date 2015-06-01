@@ -1,7 +1,6 @@
-<h4>Editar una pregunta</h4>
 <form method="post" action="/quizes/<%= quiz.id %>" enctype="multipart/form-data">
+  <input name="_method" type="hidden" value="PUT">
   <div class="row">
-  	<input name="_method" type="hidden" value="PUT">
     <div class="input-field col s12">
       <input name="quiz[question]" id="question" type="text" value="<%- quiz.question %>">
       <label for="question">Pregunta</label>

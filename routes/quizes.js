@@ -14,15 +14,16 @@ var comment = require('../controllers/comment_controller');
 router.param('quizId', 				quiz.load);
 
 // Show views
-router.get('/', 					quiz.list, 		site.render('quizes'));
-router.get('/:quizId(\\d+)', 		quiz.question, 	site.render('quizes/show'));
-router.get('/:quizId(\\d+)/answer',	quiz.answer, 	site.render('quizes/answer'));
-router.get('/statistics', 			quiz.stats, 	site.render('quizes/statistics'));
+router.get('/', 					quiz.list,		site.title('Preguntas'), site.render('quizes'));
+router.get('/:quizId(\\d+)', 		quiz.question,	site.title('Pregunta #'), 			site.render('quizes/show'));
+router.get('/:quizId(\\d+)/answer',	quiz.answer,	site.title('Pregunta #'), 			site.render('quizes/answer'));
+router.get('/statistics', 			quiz.stats,		site.title('Estadisticas'),			site.render('quizes/statistics'));
 
 // Edition views
-router.get('/new', 					session.require.login, quiz.new, 				site.render('quizes/new'));
-router.post('/create', 				session.require.login, site.multer,				quiz.create, 	site.redirect('/quizes'));
-router.get('/:quizId(\\d+)/edit', 	session.require.login, quiz.require.ownership, 	quiz.question, 	site.render('quizes/edit'));
+router.get('/new', 					session.require.login, quiz.new, 								site.title('Crear pregunta'),	site.render('quizes/new'));
+router.get('/:quizId(\\d+)/edit', 	session.require.login, quiz.require.ownership,	quiz.question,	site.title('Editar pregunta'),	site.render('quizes/edit'));
+
+router.post('/create', 				session.require.login, site.multer,	quiz.create, 	site.redirect('/quizes'));
 router.put('/:quizId(\\d+)', 		session.require.login, quiz.require.ownership, 	site.multer,	quiz.update, 	site.redirect('/quizes'));
 router.delete('/:quizId(\\d+)', 	session.require.login, quiz.require.ownership, 	quiz.delete, 	site.redirect('/quizes'));
 
