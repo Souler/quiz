@@ -7,6 +7,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 var session = require('express-session');
+var md5 = require('MD5');
 
 var routes = require('./routes/index');
 
@@ -43,6 +44,7 @@ app.use(methodOverride(function(req, res){
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(function(req, res, next) {
+    res.locals.md5 = md5;
     res.locals.errors = [];
     res.locals.session = req.session || {};
 

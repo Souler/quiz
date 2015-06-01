@@ -14,6 +14,10 @@ exports.create = function(req, res, next) {
 		req.session.errors = [];
 		req.session.user = user.toJSON();
 		req.session.user.isAdmin = user.isAdmin();
+
+		// Placeholder
+		req.session.user.email = user.username + '@' + user.username + '.com';
+
 		var redir = req.session.redir || '/';
 		res.redirect(redir.toString());
 	})

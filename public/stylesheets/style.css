@@ -18,25 +18,16 @@ header h1 .sub {
 	line-height: 4.2rem;
 }
 
-.logo {
-	margin-top: 30px;
-	margin-bottom: 10px;
-	border-bottom: 1px solid #DDD;
+.side-nav li.profile {
+	padding-bottom: 10px;
 }
 
-.logo #logo {
-	background-image: url('/images/q.png');
-	background-size: contain;
-	background-position: center;
-	background-repeat: no-repeat;
-	display: block;
-	height: 80px;
-	width: 100%;
-	margin-bottom: 20px;
+.side-nav li.profile img {
+	margin: 10px 0;
 }
 
-.side-nav li.logo:hover {
-	background-color: transparent !important;
+.side-nav li.profile .email, .side-nav li.profile .username {
+	font-size: 0.9em;
 }
 
 footer {

@@ -34,41 +34,63 @@
   </head>
   <body>
     <ul id="slide-out" class="side-nav fixed">
-        <li class="logo">
-            <a id="logo" href=""/></a>
-        </li>
-        <li class="bold active">
-            <a class="waves-effect waves-orange" href='/'>Inicio</a>
-        </li>
-        <li class="bold">
-            <a class="waves-effect waves-orange" href='/quizes'>Preguntas</a>
-        </li>
         <% if (session.user) { %>
-        <li class="bold">
-            <a class="waves-effect waves-orange" href='/user/<%= session.user.id %>/quizes'>Mis Preguntas</a>
-        </li>
-        <li class="bold">
-            <a class="waves-effect waves-orange" href='/user/<%= session.user.id %>/favourites'>Favoritas</a>
+        <li class="profile user orange darken-2">
+            <img src="http://www.gravatar.com/avatar/<%= md5(session.user.email) %>?s=50&d=identicon" class="circle left" />
+            <div class="right" title="Cerrar Sesion">
+                <a class="waves-effect waves-light btn-flat" href="/logout">
+                    <i class="fa fa-sign-out white-text"></i>
+                </a>
+            </div>
+            <div style="clear:both;"></div>
+            <div class="username bold"><%= session.user.username %></div>
+            <div class="email"> <%= session.user.email %></div>
         </li>
         <% } %>
-        <li class="bold">
-            <a class="waves-effect waves-orange" href='/quizes/statistics'>Estadisticas</a>
-        </li>
-        <li class="bold">
-            <a class="waves-effect waves-orange" href='/author'>Autores</a>
-        </li>
-        </li>
         <% if (!session.user) { %>
-        <li class="bold">
-            <a class="waves-effect waves-orange" href='/login'>Iniciar sesion</a>
-        </li>
+        <li class="profile user orange darken-2">
+            <img src="http://www.gravatar.com/avatar/annonymous?s=50&d=mm" class="circle left" />
+            <div class="right" title="Iniciar Sesion">
+                <a class="waves-effect waves-light btn-flat" href="/login">
+                    <i class="fa fa-sign-in white-text"></i>
+                </a>
+            </div>
+            <div style="clear:both;"></div>
+            <div class="username bold">Anonimo</div>
+        </li> 
         <% } %>
+        <li class="bold active no-padding">
+            <a class="waves-effect waves-orange" href='/'>
+                <i class="mdi-action-home"></i> Inicio
+            </a>
+        </li>
+        <li class="bold no-padding">
+            <a class="waves-effect waves-orange" href='/quizes'>
+                <i class="mdi-action-question-answer"></i> Preguntas
+            </a>
+        </li>
         <% if (session.user) { %>
-        <li class="bold">
-            <p><%= session.user.username %><p>
-            <a class="waves-effect waves-orange" href='/logout'>Cerrar sesion</a>
+        <li class="bold  no-padding">
+            <a class="waves-effect waves-orange" href='/user/<%= session.user.id %>/quizes'>
+                <i class="mdi-action-question-answer"></i> Mis Preguntas
+            </a>
+        </li>
+        <li class="bold no-padding">
+            <a class="waves-effect waves-orange" href='/user/<%= session.user.id %>/favourites'>
+                <i class="mdi-action-favorite"></i> Favoritas
+            </a>
         </li>
         <% } %>
+        <li class="bold no-padding">
+            <a class="waves-effect waves-orange" href='/quizes/statistics'>
+                <i class="fa fa-bar-chart"></i> Estadisticas
+            </a>
+        </li>
+        <li class="bold no-padding">
+            <a class="waves-effect waves-orange" href='/author'>
+                <i class="mdi-social-group"></i> Autores
+            </a>
+        </li>
     </ul>
     <header class="orange darken-2">
         <a href="#" data-activates="slide-out" class="button-collapse hide-on-large-only">

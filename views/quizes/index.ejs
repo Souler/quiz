@@ -10,15 +10,6 @@
   <% var canEdit = session.user && (session.user.isAdmin || q.UserId == session.user.id) %>
   <li class="collection-item">
   	<a href="/quizes/<%= q.id %>"><%= q.question %></a> 
-    <% if (canEdit) { %>
-    <form id="deleteform-<%= q.id %>"class="secondary-content" method="post" action="/quizes/<%= q.id %>">
-    	<input name="_method" type="hidden" value="DELETE">
-    	<a class="secondary-content" href="#" onclick="return confirm('Borrar: <%= q.question %>') && document.getElementById('deleteform-<%= q.id %>').submit();">
-    		<i class="small mdi-action-delete"></i>
-    	</a>
-    </form>  
-    <a href="/quizes/<%= q.id %>/edit" class="secondary-content"><i class="small mdi-editor-mode-edit"></i></a>
-    <% } %> 
     <% if (session.user && !q.isFav) { %>
     <form id="addfav-<%= q.id %>" class="secondary-content" method="post" action="/user/<%= session.user.id %>/favourites/<%= q.id %>">
       <input name="_method" type="hidden" value="PUT">
@@ -35,6 +26,15 @@
       </a>
     </form>
     <% } %>
+    <% if (canEdit) { %>
+    <form id="deleteform-<%= q.id %>"class="secondary-content" method="post" action="/quizes/<%= q.id %>">
+      <input name="_method" type="hidden" value="DELETE">
+      <a class="secondary-content" href="#" onclick="return confirm('Borrar: <%= q.question %>') && document.getElementById('deleteform-<%= q.id %>').submit();">
+        <i class="small mdi-action-delete"></i>
+      </a>
+    </form>  
+    <a href="/quizes/<%= q.id %>/edit" class="secondary-content"><i class="small mdi-editor-mode-edit"></i></a>
+    <% } %>     
   </li>
   <% }) %>
   <% if (!isUserView) { %>
