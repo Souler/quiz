@@ -1,5 +1,10 @@
 <h4><%= q.question %></h4>
 <form method="get" action="/quizes/<%= q.id %>/answer">
+  <% if (q.image) { %>
+  <div class="row center">
+  	<img src="/media/<%= q.image %>"/>
+  </div>
+  <% } %>
   <div class="row">
     <div class="input-field col s12">
       <input name="a" id="a" type="text" required>

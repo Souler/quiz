@@ -18,7 +18,7 @@ router.post('/', 					session.require.annon, user.create);
 router.put('/:userId(\\d+)', 		session.require.login, user.require.ownership, user.update);
 router.delete('/:userId(\\d+)', 	session.require.login, user.require.ownership, user.destroy);
 
-router.get('/:userId/quizes', quiz.list, site.render('quizes'));
+router.get('/:userId/quizes', 		quiz.list, site.title('Preguntas'), site.render('quizes'));
 
 router.get('/:userId(\\d+)/favourites', 					session.require.login, user.require.ownership, favs.list, quiz.list, site.title('Favoritas'), site.render('quizes'));
 router.put('/:userId(\\d+)/favourites/:quizId(\\d+)', 		session.require.login, user.require.ownership, favs.add);

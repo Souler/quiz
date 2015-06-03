@@ -35,7 +35,7 @@ exports.User = User;
 exports.Favourites = Favourites;
 
 sequelize
-.sync({ force: false })
+.sync({ force: global.QUIZ_FORCE_SYNC })
 .then(function() {
 	return User.count();
 })
