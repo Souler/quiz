@@ -35,7 +35,7 @@ exports.User = User;
 exports.Favourites = Favourites;
 
 sequelize
-.sync({ force: true })
+.sync({ force: !false })
 .then(function() {
 	return User.count();
 })
@@ -44,8 +44,17 @@ sequelize
 		return;
 
 	var users = [
-		{ username: 'admin', password: '1234', role: 'admin' },
-		{ username: 'pepe', password: '5678' }
+		{
+			username: 'admin',
+			email: 'admin@quiz.com',
+			password: '1234',
+			role: 'admin'
+		},
+		{
+			username: 'pepe',
+			email: 'pepe@quiz.com',
+			password: '5678'
+		}
 	];
 
 	return User.bulkCreate(users);

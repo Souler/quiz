@@ -14,10 +14,10 @@ var comment = require('../controllers/comment_controller');
 router.param('quizId', 				quiz.load);
 
 // Show views
-router.get('/', 					quiz.list,		site.title('Preguntas'), site.render('quizes'));
-router.get('/:quizId(\\d+)', 		quiz.question,	site.title('Pregunta #'), 			site.render('quizes/show'));
-router.get('/:quizId(\\d+)/answer',	quiz.answer,	site.title('Pregunta #'), 			site.render('quizes/answer'));
-router.get('/statistics', 			quiz.stats,		site.title('Estadisticas'),			site.render('quizes/statistics'));
+router.get('/', 					quiz.list,		site.title('Preguntas'), 	site.render('quizes'));
+router.get('/:quizId(\\d+)', 		quiz.question,	site.title('Pregunta'), 	site.render('quizes/show'));
+router.get('/:quizId(\\d+)/answer',	quiz.answer,	site.title('Pregunta'), 	site.render('quizes/answer'));
+router.get('/statistics', 			quiz.stats,		site.title('Estadisticas'),	site.render('quizes/statistics'));
 
 // Edition views
 router.get('/new', 					session.require.login, quiz.new, 								site.title('Crear pregunta'),	site.render('quizes/new'));

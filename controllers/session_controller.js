@@ -15,9 +15,6 @@ exports.create = function(req, res, next) {
 		req.session.user = user.toJSON();
 		req.session.user.isAdmin = user.isAdmin();
 
-		// Placeholder
-		req.session.user.email = user.username + '@' + user.username + '.com';
-
 		var redir = req.session.redir || '/';
 		res.redirect(redir.toString());
 	})
@@ -35,4 +32,11 @@ exports.require.login = function(req, res, next) {
 		next();
 	else
 		res.redirect('/login');
+}
+
+exports.require.annon = function(req, res, next) {
+	if (!req.session.user)
+		next();
+	else
+		res.redirect('/');
 }

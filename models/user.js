@@ -17,6 +17,35 @@ module.exports = function(sequelize, DataTypes) {
 						next();
 					})
 					.catch(next)
+				},
+				isAlphanumeric: {
+					msg: "El nombre de usuario debe ser alfanumerico"
+				},
+				notEmpty: {
+					msg: "No se ha especificado nombre de usuario"
+				}
+			}
+		},
+		email: {
+			type: DataTypes.STRING,
+			unique: true,
+			validate: {
+				isUnique: function(value, next) {
+					var self = this;
+					User
+					.find({ where: { username: value } })
+					.then(function(user) {
+						if (user && user.id !== self.id)
+							throw new Error('Ya existe un usuario con ese email');
+						next();
+					})
+					.catch(next)
+				},
+				isEmail: {
+					msg: 'Email no valido'
+				},
+				notEmpty: {
+					msg: "No se ha especificado email"
 				}
 			}
 		},

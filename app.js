@@ -49,7 +49,7 @@ app.use(function(req, res, next) {
     res.locals.errors = [];
     res.locals.session = req.session || {};
 
-    if (!req.path.match(/\/login|\/logout/))
+    if (!req.path.match(/\/login|\/logout|\/user/))
         req.session.redir = req.path;
 
     next();

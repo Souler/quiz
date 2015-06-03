@@ -42,6 +42,11 @@
                     <i class="fa fa-sign-out white-text"></i>
                 </a>
             </div>
+            <div class="right" title="Editar perfil">
+                <a class="waves-effect waves-light btn-flat" href="/user/<%= session.user.id %>/edit">
+                    <i class="mdi-social-person white-text"></i>
+                </a>
+            </div>
             <div style="clear:both;"></div>
             <div class="username bold"><%= session.user.username %></div>
             <div class="email"> <%= session.user.email %></div>
@@ -53,6 +58,11 @@
             <div class="right" title="Iniciar Sesion">
                 <a class="waves-effect waves-light btn-flat" href="/login">
                     <i class="fa fa-sign-in white-text"></i>
+                </a>
+            </div>
+            <div class="right" title="Registrarse">
+                <a class="waves-effect waves-light btn-flat" href="/user">
+                    <i class="mdi-social-person-add white-text"></i>
                 </a>
             </div>
             <div style="clear:both;"></div>

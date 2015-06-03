@@ -3,13 +3,17 @@
   <% var canPublish = session.user && (session.user.isAdmin || comment.Quiz.UserId == session.user.id) %>
   <% if (comment.published || canPublish) { %>
   <li class="collection-item avatar">
+    <% if (comment.User) { %>
+    <img src="http://www.gravatar.com/avatar/<%= md5(comment.User.email) %>?s=50&d=identicon" alt="" class="circle">
+    <% } else { %>
     <i class="mdi-communication-textsms circle"></i>
+  	<% } %>
     <span class="title">
-    	<% if (comment.User) { %>
-    	<span><%= comment.User.username %></span>
-  		<% } else { %>
-    	<span>Anonimo</span>
-  		<% } %>
+      <% if (comment.User) { %>
+      <span><%= comment.User.username %></span>
+      <% } else { %>
+      <span>Anonimo</span>
+      <% } %>
     	<span> dice:</span>
     </span>
     <p><%= comment.text %></p>

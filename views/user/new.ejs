@@ -1,0 +1,23 @@
+<div class="row">
+<form method="post" action="/user">
+  <div class="input-field col s12">
+    <i class="mdi-action-account-circle prefix"></i>
+    <input id="username" name="user[username]" type="text" class="validate">
+    <label for="username">Nombre de usuario</label>
+  </div>
+  <div class="input-field col s12">
+    <i class="mdi-content-mail prefix"></i>
+    <input id="email" name="user[email]" type="email" class="validate">
+    <label for="email">Email</label>
+  </div>
+  <div class="input-field col s12">
+    <i class="mdi-action-lock prefix"></i>
+    <input id="pass" name="user[password]" type="password" class="validate">
+    <label for="pass">Contrasena</label>
+  </div>
+  <button class="btn waves-effect waves-light" type="submit">
+    <span>Completar registro</span>
+    <i class="mdi-content-send right"></i>
+  </button>
+</form>
+</div>
