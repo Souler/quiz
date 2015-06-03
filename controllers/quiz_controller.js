@@ -42,7 +42,7 @@ exports.list = function(req, res, next) {
 
 	where.question = { like: like };
 
-	if (req.user)
+	if (req.user && !req.listFavs)
 		where.UserId = req.user.id;
 
 	res.locals.isUserView = !!req.user;
