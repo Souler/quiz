@@ -35,7 +35,7 @@ exports.User = User;
 exports.Favourites = Favourites;
 
 sequelize
-.sync({ force: !false })
+.sync({ force: false })
 .then(function() {
 	return User.count();
 })

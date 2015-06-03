@@ -44,3 +44,33 @@
   </a>
   <% } %>
 </div>
+<div class="pagination-container">
+  <ul class="pagination">
+    <% if (page <= 0) { %>
+    <li class="disabled">
+    <% } else {%>
+    <li class="waves-effect">
+    <% } %>
+      <a href="?search=<%= query %>&p=<%= page-1 %>"><i class="mdi-navigation-chevron-left"></i></a>
+    </li>
+    <% for (var i = -2; i<=2; i++) { %>
+    <% var p = page + i; %>
+    <% if (p < 0) continue %>
+    <% if (p >= pages) continue %>
+    <% if (i == 0) { %>
+    <li class="active">
+    <% } else {%>
+    <li class="waves-effect">
+    <% } %>
+      <a href="?search=<%= query %>&p=<%= p %>"><%= p + 1 %></a>
+    </li>
+    <% } %>
+    <% if (page >= pages-1) { %>
+    <li class="disabled">
+    <% } else {%>
+    <li class="waves-effect">
+    <% } %>
+      <a href="?search=<%= query %>&p=<%= page+1 %>"><i class="mdi-navigation-chevron-right"></i></a>
+    </li>
+  </ul>
+</div>

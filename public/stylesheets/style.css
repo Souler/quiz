@@ -69,3 +69,20 @@ main {
 header .container .row {
 	margin-bottom: 0;
 }
+
+.pagination-container {
+	text-align: center;
+}
+
+.pagination-container > .pagination {
+	display: inline-block;
+}
+
+.pagination-container > .pagination > li.active {
+	background-color: #26A69A;
+}
+
+.pagination-container > .pagination > li > a {
+	position: relative;
+	top: 3px;
+}

@@ -37,6 +37,9 @@ exports.list = function(req, res, next) {
 
 	var query = req.query.search || '';
 	var like = '%' + query.replace(/\s+/, '%') + '%';
+	var page = Number(req.query.p) || 0;
+	var limit = Number(req.query.l) || 10;
+
 	where.question = { like: like };
 
 	if (req.user)
@@ -51,6 +54,11 @@ exports.list = function(req, res, next) {
 
 	searchPromise
 	.then(function(qs) {
+		res.locals.limit = limit;
+		res.locals.page = page;
+		res.locals.pages = Math.ceil(qs.length / limit);
+
+		qs = qs.slice(page*limit, page*limit + limit);
 		res.locals.query = query;
 		res.locals.questions = qs;
 
